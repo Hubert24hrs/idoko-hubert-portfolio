@@ -117,6 +117,13 @@ export default function CertificationsPage() {
                                             </span>
                                         </td>
                                         <td>
+                                            <Link
+                                                href={`/admin/certifications/${cert.id}/edit`}
+                                                className={styles.actionBtn}
+                                                title="Edit"
+                                            >
+                                                <Pencil size={16} />
+                                            </Link>
                                             <button
                                                 className={styles.actionBtn}
                                                 onClick={() => togglePublished(cert.id, cert.published)}

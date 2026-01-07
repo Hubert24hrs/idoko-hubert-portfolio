@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MessageSquare, Plus, Trash2, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { MessageSquare, Plus, Pencil, Trash2, Eye, EyeOff, Loader2 } from 'lucide-react';
 import styles from '../admin.module.css';
 
 interface Testimonial {
@@ -104,6 +104,13 @@ export default function TestimonialsPage() {
                                             </span>
                                         </td>
                                         <td>
+                                            <Link
+                                                href={`/admin/testimonials/${t.id}/edit`}
+                                                className={styles.actionBtn}
+                                                title="Edit"
+                                            >
+                                                <Pencil size={16} />
+                                            </Link>
                                             <button
                                                 className={styles.actionBtn}
                                                 onClick={() => togglePublished(t.id, t.published)}

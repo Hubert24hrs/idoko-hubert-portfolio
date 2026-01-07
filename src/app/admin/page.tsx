@@ -236,9 +236,9 @@ export default function AdminDashboard() {
                                             >
                                                 {project.published ? <EyeOff size={16} /> : <Eye size={16} />}
                                             </button>
-                                            <button className={styles.actionBtn} title="Edit">
+                                            <Link href={`/admin/projects/${project.id}/edit`} className={styles.actionBtn} title="Edit">
                                                 <Pencil size={16} />
-                                            </button>
+                                            </Link>
                                             <button
                                                 className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
                                                 onClick={() => deleteProject(project.id)}
