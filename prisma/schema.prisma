@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String // Hashed password for admin
+  role          String    @default("admin")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Project {
+  id            String    @id @default(cuid())
+  title         String
+  slug          String    @unique
+  description   String
+  longDescription String?
+  category      String    // AI, Data, FullStack
+  technologies  String    // JSON array as string
+  imageUrl      String?
+  liveUrl       String?
+  githubUrl     String?
+  metrics       String?   // JSON object as string (e.g., accuracy, etc.)
+  featured      Boolean   @default(false)
+  published     Boolean   @default(true)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Certification {
+  id              String    @id @default(cuid())
+  title           String
+  issuer          String
+  issueDate       DateTime
+  expiryDate      DateTime?
+  credentialId    String?
+  credentialUrl   String?
+  logoUrl         String?
+  published       Boolean   @default(true)
+  order           Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model SiteSettings {
+  id            String    @id @default("settings")
+  heroTitle     String    @default("Idoko Hubert")
+  heroSubtitle  String    @default("AI & ML Engineer | End-to-End Data Solutions Architect | Full-Stack Mobile & Web Developer")
+  aboutContent  String?
+  resumeUrl     String?
+  linkedinUrl   String?
+  githubUrl     String?
+  twitterUrl    String?
+  kaggleUrl     String?
+  mediumUrl     String?
+  blogUrl       String?
+  updatedAt     DateTime  @updatedAt
+}
