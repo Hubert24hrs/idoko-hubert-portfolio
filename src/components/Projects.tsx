@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { ExternalLink, Github, Star } from 'lucide-react';
 import styles from './Projects.module.css';
 
@@ -14,81 +13,15 @@ interface Project {
     category: ProjectCategory;
     categoryLabel: string;
     technologies: string[];
-    imageUrl: string;
-    liveUrl?: string;
-    githubUrl?: string;
+    imageUrl?: string | null;
+    liveUrl?: string | null;
+    githubUrl?: string | null;
     featured?: boolean;
 }
 
-// Sample projects - these would come from Prisma/database in production
-const sampleProjects: Project[] = [
-    {
-        id: '1',
-        title: 'Intelligent Document Processing',
-        description: 'End-to-end ML pipeline for automated document classification and data extraction using transformer models.',
-        category: 'ai',
-        categoryLabel: 'AI & ML',
-        technologies: ['Python', 'PyTorch', 'Transformers', 'FastAPI', 'Docker'],
-        imageUrl: '/images/placeholder-ai.jpg',
-        githubUrl: '#',
-        liveUrl: '#',
-        featured: true,
-    },
-    {
-        id: '2',
-        title: 'Real-time Analytics Platform',
-        description: 'Scalable data pipeline processing millions of events daily with real-time dashboards.',
-        category: 'data',
-        categoryLabel: 'Data Solutions',
-        technologies: ['Apache Kafka', 'Spark', 'PostgreSQL', 'Grafana', 'AWS'],
-        imageUrl: '/images/placeholder-data.jpg',
-        githubUrl: '#',
-        featured: true,
-    },
-    {
-        id: '3',
-        title: 'E-Commerce Mobile App',
-        description: 'Cross-platform mobile application with secure payments and real-time order tracking.',
-        category: 'fullstack',
-        categoryLabel: 'Full-Stack',
-        technologies: ['Flutter', 'Node.js', 'MongoDB', 'Stripe', 'Firebase'],
-        imageUrl: '/images/placeholder-web.jpg',
-        liveUrl: '#',
-        githubUrl: '#',
-    },
-    {
-        id: '4',
-        title: 'Predictive Maintenance System',
-        description: 'IoT-based ML system predicting equipment failures with 95% accuracy.',
-        category: 'ai',
-        categoryLabel: 'AI & ML',
-        technologies: ['TensorFlow', 'Python', 'AWS IoT', 'Time Series ML'],
-        imageUrl: '/images/placeholder-ai.jpg',
-        githubUrl: '#',
-    },
-    {
-        id: '5',
-        title: 'Data Warehouse Solution',
-        description: 'Modern data warehouse architecture with automated ETL and BI integrations.',
-        category: 'data',
-        categoryLabel: 'Data Solutions',
-        technologies: ['Snowflake', 'dbt', 'Airflow', 'Python', 'Tableau'],
-        imageUrl: '/images/placeholder-data.jpg',
-        liveUrl: '#',
-    },
-    {
-        id: '6',
-        title: 'SaaS Dashboard Platform',
-        description: 'Multi-tenant SaaS platform with role-based access and white-label capabilities.',
-        category: 'fullstack',
-        categoryLabel: 'Full-Stack',
-        technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Vercel'],
-        imageUrl: '/images/placeholder-web.jpg',
-        liveUrl: '#',
-        githubUrl: '#',
-        featured: true,
-    },
-];
+interface ProjectsProps {
+    data: Project[];
+}
 
 const categories = [
     { id: 'all' as const, label: 'All Projects' },
@@ -97,12 +30,12 @@ const categories = [
     { id: 'fullstack' as const, label: 'Full-Stack Development' },
 ];
 
-export default function Projects() {
+export default function Projects({ data }: ProjectsProps) {
     const [activeCategory, setActiveCategory] = useState<ProjectCategory>('all');
 
     const filteredProjects = activeCategory === 'all'
-        ? sampleProjects
-        : sampleProjects.filter((p) => p.category === activeCategory);
+        ? data
+        : data.filter((p) => p.category === activeCategory);
 
     return (
         <section id="projects" className={styles.projects} aria-labelledby="projects-title">
@@ -134,7 +67,11 @@ export default function Projects() {
 
             {/* Projects Grid */}
             <div id="projects-grid" className={styles.projectsGrid} role="tabpanel">
-                {filteredProjects.length > 0 ? (
+                {(!data || data.length === 0) ? (
+                    <div className={styles.emptyState}>
+                        <p>Projects coming soon...</p>
+                    </div>
+                ) : filteredProjects.length > 0 ? (
                     filteredProjects.map((project) => (
                         <article key={project.id} className={styles.projectCard}>
                             <div className={styles.projectImageWrapper}>

@@ -7,12 +7,13 @@ import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
-import { getCertifications, getTestimonials } from '@/lib/data-service';
+import { getCertifications, getTestimonials, getProjects } from '@/lib/data-service';
 
 export default async function Home() {
-  const [certifications, testimonials] = await Promise.all([
+  const [certifications, testimonials, projects] = await Promise.all([
     getCertifications(true),
-    getTestimonials(true)
+    getTestimonials(true),
+    getProjects(true)
   ]);
 
   return (
@@ -21,7 +22,7 @@ export default async function Home() {
       <main id="main-content">
         <Hero />
         <Skills />
-        <Projects />
+        <Projects data={projects} />
         <Certifications data={certifications} />
         <Testimonials data={testimonials} />
         <Contact />
