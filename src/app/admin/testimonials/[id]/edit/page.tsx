@@ -41,36 +41,36 @@ export default function EditTestimonialPage() {
     });
 
     useEffect(() => {
+        const fetchTestimonial = async () => {
+            try {
+                const res = await fetch('/api/testimonials?published=false');
+                const data = await res.json();
+                const t = data.testimonials?.find((item: Testimonial) => item.id === id);
+
+                if (t) {
+                    setFormData({
+                        author: t.author || '',
+                        role: t.role || '',
+                        company: t.company || '',
+                        content: t.content || '',
+                        link: t.link || '',
+                        contact: t.contact || '',
+                        published: t.published !== false,
+                        order: t.order || 0,
+                    });
+                } else {
+                    setError('Testimonial not found');
+                }
+            } catch (error) {
+                console.error('Error fetching testimonial:', error);
+                setError('Failed to load testimonial');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         fetchTestimonial();
     }, [id]);
-
-    const fetchTestimonial = async () => {
-        try {
-            const res = await fetch('/api/testimonials?published=false');
-            const data = await res.json();
-            const t = data.testimonials?.find((item: Testimonial) => item.id === id);
-
-            if (t) {
-                setFormData({
-                    author: t.author || '',
-                    role: t.role || '',
-                    company: t.company || '',
-                    content: t.content || '',
-                    link: t.link || '',
-                    contact: t.contact || '',
-                    published: t.published !== false,
-                    order: t.order || 0,
-                });
-            } else {
-                setError('Testimonial not found');
-            }
-        } catch (error) {
-            console.error('Error fetching testimonial:', error);
-            setError('Failed to load testimonial');
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -102,7 +102,7 @@ export default function EditTestimonialPage() {
                 router.push('/admin/testimonials');
                 router.refresh();
             }, 1500);
-        } catch (err) {
+        } catch {
             setError('Failed to update testimonial');
             setIsSubmitting(false);
         }

@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, X } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 import styles from '../../projects/form.module.css';
 
 export default function NewCertificationPage() {
@@ -50,7 +50,7 @@ export default function NewCertificationPage() {
 
             router.push('/admin/certifications');
             router.refresh();
-        } catch (err) {
+        } catch {
             setError('Failed to create certification');
             setIsSubmitting(false);
         }

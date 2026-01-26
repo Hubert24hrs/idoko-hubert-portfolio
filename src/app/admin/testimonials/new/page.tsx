@@ -48,7 +48,7 @@ export default function NewTestimonialPage() {
 
             router.push('/admin/testimonials');
             router.refresh();
-        } catch (err) {
+        } catch {
             setError('Failed to create testimonial');
             setIsSubmitting(false);
         }

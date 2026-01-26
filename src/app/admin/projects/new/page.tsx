@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, FormEvent, useRef } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import NextImage from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Save, X, Upload, Image, Video, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, X, Image as ImageIcon, Video, Loader2 } from 'lucide-react';
 import styles from '../form.module.css';
 
 export default function AddProjectPage() {
@@ -13,7 +14,6 @@ export default function AddProjectPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [uploadProgress, setUploadProgress] = useState('');
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -242,14 +242,14 @@ export default function AddProjectPage() {
                                         {isUploading ? (
                                             <Loader2 size={24} className={styles.spinning} />
                                         ) : (
-                                            <Image size={24} />
+                                            <ImageIcon size={24} />
                                         )}
                                         <span>Upload Image</span>
                                         <span className={styles.uploadHint}>JPG, PNG, GIF, WebP (max 10MB)</span>
                                     </label>
                                     {formData.imageUrl && (
                                         <div className={styles.uploadPreview}>
-                                            <img src={formData.imageUrl} alt="Preview" />
+                                            <NextImage src={formData.imageUrl} alt="Preview" width={100} height={100} style={{ width: 'auto', height: 'auto' }} />
                                             <button
                                                 type="button"
                                                 onClick={() => setFormData(prev => ({ ...prev, imageUrl: '' }))}

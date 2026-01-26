@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Mail, Trash2, Check, Loader2 } from 'lucide-react';
+import { Trash2, Check, Loader2 } from 'lucide-react';
 import styles from '../admin.module.css';
 
 interface Message {

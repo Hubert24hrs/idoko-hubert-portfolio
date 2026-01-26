@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         });
 
         return NextResponse.json({ testimonial: newTestimonial }, { status: 201 });
-    } catch (error) {
+    } catch {
         return NextResponse.json(
             { error: 'Failed to create testimonial' },
             { status: 500 }
@@ -63,7 +63,7 @@ export async function PUT(request: NextRequest) {
         }
 
         return NextResponse.json({ testimonial: updatedTestimonial });
-    } catch (error) {
+    } catch {
         return NextResponse.json(
             { error: 'Failed to update testimonial' },
             { status: 500 }
