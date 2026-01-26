@@ -75,31 +75,31 @@
     letter-spacing: -0.02em;
 }
 
-.professionalTagline {
-    font-size: var(--text-xl);
-    font-weight: 500;
-    background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientFlow 4s ease-in-out infinite;
+.roleWrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-xs);
-    align-items: center;
-    line-height: 1.5;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
 }
 
-.professionalTagline em {
-    font-style: italic;
+.roleTag {
+    font-size: var(--text-sm);
     font-weight: 600;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    background: linear-gradient(90deg, var(--surface), var(--background));
 }
 
-.taglineDivider {
-    opacity: 0.5;
-    font-weight: 300;
-    margin: 0 var(--space-xs);
+.roleTag:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--shadow-md);
 }
 
 @keyframes gradientFlow {
@@ -241,15 +241,27 @@
 }
 
 .floatingCard1 {
-    top: 20%;
-    right: -20px;
+    top: 12%;
+    right: -40px;
     animation: float 6s ease-in-out infinite;
 }
 
 .floatingCard2 {
-    bottom: 20%;
-    left: -20px;
-    animation: float 6s ease-in-out infinite 2s;
+    top: 12%;
+    left: -40px;
+    animation: float 6s ease-in-out infinite 1.5s;
+}
+
+.floatingCard3 {
+    bottom: 15%;
+    right: -40px;
+    animation: float 6s ease-in-out infinite 3s;
+}
+
+.floatingCard4 {
+    bottom: 15%;
+    left: -40px;
+    animation: float 6s ease-in-out infinite 4.5s;
 }
 
 .cardIcon {

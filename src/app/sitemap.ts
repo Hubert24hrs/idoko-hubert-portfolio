@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://idokohubert.dev';
+    const baseUrl = 'https://idokohubert.com';
     const currentDate = new Date().toISOString();
 
     // Core pages

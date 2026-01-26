@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { AuthProvider } from "@/components/AuthProvider";
 import "./globals.css";
 
-const baseUrl = 'https://idokohubert.dev';
+const baseUrl = 'https://idokohubert.com';
 
 export const viewport: Viewport = {
   width: 'device-width',

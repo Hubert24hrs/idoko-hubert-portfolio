@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Download, ArrowRight, Brain, Code } from 'lucide-react';
+import { Download, ArrowRight, Brain, Code, Cloud, Database } from 'lucide-react';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -23,24 +23,25 @@ export default function Hero() {
                         Hi, I&apos;m <span className="gradient-text">Idoko Hubert</span>
                     </h1>
 
-                    <p className={styles.professionalTagline}>
-                        <em>AI & ML Engineer</em> <span className={styles.taglineDivider}>|</span>
-                        <em>Designing End-to-End Data Solutions</em> <span className={styles.taglineDivider}>|</span>
-                        <em>Full-Stack Mobile & Web Development</em>
-                    </p>
+                    <div className={styles.roleWrapper}>
+                        <span className={styles.roleTag}>AI & ML Engineer</span>
+                        <span className={styles.roleTag}>End-to-End Data Solutions</span>
+                        <span className={styles.roleTag}>Full-Stack Development</span>
+                        <span className={styles.roleTag}>Cloud & DevOps</span>
+                    </div>
 
                     <div className={styles.heroBio}>
                         <p>
-                            I design and deploy end-to-end AI and data-driven solutions by integrating machine learning,
-                            advanced analytics, and full-stack mobile and web development to build scalable,
-                            production-ready systems. With over three years of hands-on experience, I transform
-                            complex data into actionable insights and develop intelligent applications that deliver measurable impact.
+                            I build intelligent, scalable systems that bridge machine learning, advanced analytics,
+                            and full-stack development. With over three years of experience, I specialize in
+                            transforming complex data into production-ready applications that drive real business value.
                         </p>
                         <p>
-                            I excel in solution architecture, data pipeline optimization, cloud-native development,
-                            API integration, and deploying AI models in real-world environments. My work combines
-                            technical depth with product-focused thinking, enabling me to build reliable, high-impact
-                            solutions that align with business goals and scale globally, setting me apart in a competitive field.
+                            My expertise spans solution architecture, data pipeline engineering, cloud-native infrastructure,
+                            and AI model deployment. I approach every project with both technical rigor and product vision,
+                            ensuring solutions are not only robust and scalable but aligned with strategic objectives.
+                            This combination of deep technical capability and business acumen allows me to deliver
+                            high-impact results that stand out in today's competitive landscape.
                         </p>
                     </div>
 
@@ -92,7 +93,7 @@ export default function Hero() {
                         <div className={`${styles.cardIcon} ${styles.cardIconPrimary}`}>
                             <Brain size={16} />
                         </div>
-                        <span>AI Engineer</span>
+                        <span>AI/ML Engineer</span>
                     </div>
 
                     <div className={`${styles.floatingCard} ${styles.floatingCard2}`} aria-hidden="true">
@@ -100,6 +101,20 @@ export default function Hero() {
                             <Code size={16} />
                         </div>
                         <span>Full-Stack Dev</span>
+                    </div>
+
+                    <div className={`${styles.floatingCard} ${styles.floatingCard3}`} aria-hidden="true">
+                        <div className={`${styles.cardIcon} ${styles.cardIconAccent}`}>
+                            <Cloud size={16} />
+                        </div>
+                        <span>Cloud/DevOps Engineer</span>
+                    </div>
+
+                    <div className={`${styles.floatingCard} ${styles.floatingCard4}`} aria-hidden="true">
+                        <div className={`${styles.cardIcon} ${styles.cardIconPrimary}`}>
+                            <Database size={16} />
+                        </div>
+                        <span>Data Specialist</span>
                     </div>
                 </div>
             </div>
