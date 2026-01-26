@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Calendar, ExternalLink, Award } from 'lucide-react';
 import styles from './Certifications.module.css';
 
@@ -42,7 +43,14 @@ export default function Certifications({ data }: CertificationsProps) {
                             <div className={styles.certHeader}>
                                 <div className={styles.certLogo}>
                                     {cert.logoUrl ? (
-                                        <img src={cert.logoUrl} alt={cert.issuer} className={styles.certLogoImg} />
+                                        <Image
+                                            src={cert.logoUrl}
+                                            alt={cert.issuer}
+                                            className={styles.certLogoImg}
+                                            width={50}
+                                            height={50}
+                                            style={{ width: 'auto', height: 'auto' }}
+                                        />
                                     ) : (
                                         <span className={styles.certLogoPlaceholder}>{getInitials(cert.issuer)}</span>
                                     )}

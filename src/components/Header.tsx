@@ -24,6 +24,8 @@ export default function Header() {
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTheme(initialTheme);
         document.documentElement.setAttribute('data-theme', initialTheme);
     }, []);

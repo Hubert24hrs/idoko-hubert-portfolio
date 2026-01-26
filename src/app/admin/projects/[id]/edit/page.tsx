@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, FormEvent, useRef } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Save, Loader2, Upload } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import styles from '../../../projects/form.module.css';
 
 interface Project {
@@ -60,40 +61,40 @@ export default function EditProjectPage() {
     });
 
     useEffect(() => {
+        const fetchProject = async () => {
+            try {
+                const res = await fetch('/api/projects?published=false');
+                const data = await res.json();
+                const p = data.projects?.find((item: Project) => item.id === id);
+
+                if (p) {
+                    setFormData({
+                        title: p.title || '',
+                        slug: p.slug || '',
+                        description: p.description || '',
+                        longDescription: p.longDescription || '',
+                        category: p.category || 'ai',
+                        technologies: Array.isArray(p.technologies) ? p.technologies.join(', ') : '',
+                        imageUrl: p.imageUrl || '',
+                        videoUrl: p.videoUrl || '',
+                        liveUrl: p.liveUrl || '',
+                        githubUrl: p.githubUrl || '',
+                        featured: p.featured || false,
+                        published: p.published !== false,
+                    });
+                } else {
+                    setError('Project not found');
+                }
+            } catch (error) {
+                console.error('Error fetching project:', error);
+                setError('Failed to load project');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         fetchProject();
     }, [id]);
-
-    const fetchProject = async () => {
-        try {
-            const res = await fetch('/api/projects?published=false');
-            const data = await res.json();
-            const p = data.projects?.find((item: Project) => item.id === id);
-
-            if (p) {
-                setFormData({
-                    title: p.title || '',
-                    slug: p.slug || '',
-                    description: p.description || '',
-                    longDescription: p.longDescription || '',
-                    category: p.category || 'ai',
-                    technologies: Array.isArray(p.technologies) ? p.technologies.join(', ') : '',
-                    imageUrl: p.imageUrl || '',
-                    videoUrl: p.videoUrl || '',
-                    liveUrl: p.liveUrl || '',
-                    githubUrl: p.githubUrl || '',
-                    featured: p.featured || false,
-                    published: p.published !== false,
-                });
-            } else {
-                setError('Project not found');
-            }
-        } catch (error) {
-            console.error('Error fetching project:', error);
-            setError('Failed to load project');
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -177,7 +178,7 @@ export default function EditProjectPage() {
                 router.push('/admin');
                 router.refresh();
             }, 1500);
-        } catch (err) {
+        } catch {
             setError('Failed to update project');
             setIsSubmitting(false);
         }
@@ -325,7 +326,13 @@ export default function EditProjectPage() {
                                 />
                                 {formData.imageUrl && (
                                     <div className={styles.previewBox}>
-                                        <img src={formData.imageUrl} alt="Preview" style={{ maxHeight: 100 }} />
+                                        <Image
+                                            src={formData.imageUrl}
+                                            alt="Preview"
+                                            width={100}
+                                            height={100}
+                                            style={{ maxHeight: 100, width: 'auto' }}
+                                        />
                                     </div>
                                 )}
                             </div>

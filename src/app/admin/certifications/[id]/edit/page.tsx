@@ -44,38 +44,38 @@ export default function EditCertificationPage() {
     });
 
     useEffect(() => {
+        const fetchCertification = async () => {
+            try {
+                const res = await fetch('/api/certifications?published=false');
+                const data = await res.json();
+                const cert = data.certifications?.find((c: Certification) => c.id === id);
+
+                if (cert) {
+                    setFormData({
+                        title: cert.title || '',
+                        issuer: cert.issuer || '',
+                        issueDate: cert.issueDate ? cert.issueDate.split('T')[0] : '',
+                        expiryDate: cert.expiryDate ? cert.expiryDate.split('T')[0] : '',
+                        credentialId: cert.credentialId || '',
+                        credentialUrl: cert.credentialUrl || '',
+                        logoUrl: cert.logoUrl || '',
+                        category: cert.category || 'ai',
+                        published: cert.published !== false,
+                        order: cert.order || 0,
+                    });
+                } else {
+                    setError('Certification not found');
+                }
+            } catch (error) {
+                console.error('Error fetching certification:', error);
+                setError('Failed to load certification');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         fetchCertification();
     }, [id]);
-
-    const fetchCertification = async () => {
-        try {
-            const res = await fetch('/api/certifications?published=false');
-            const data = await res.json();
-            const cert = data.certifications?.find((c: Certification) => c.id === id);
-
-            if (cert) {
-                setFormData({
-                    title: cert.title || '',
-                    issuer: cert.issuer || '',
-                    issueDate: cert.issueDate ? cert.issueDate.split('T')[0] : '',
-                    expiryDate: cert.expiryDate ? cert.expiryDate.split('T')[0] : '',
-                    credentialId: cert.credentialId || '',
-                    credentialUrl: cert.credentialUrl || '',
-                    logoUrl: cert.logoUrl || '',
-                    category: cert.category || 'ai',
-                    published: cert.published !== false,
-                    order: cert.order || 0,
-                });
-            } else {
-                setError('Certification not found');
-            }
-        } catch (error) {
-            console.error('Error fetching certification:', error);
-            setError('Failed to load certification');
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -107,7 +107,7 @@ export default function EditCertificationPage() {
                 router.push('/admin/certifications');
                 router.refresh();
             }, 1500);
-        } catch (err) {
+        } catch {
             setError('Failed to update certification');
             setIsSubmitting(false);
         }
