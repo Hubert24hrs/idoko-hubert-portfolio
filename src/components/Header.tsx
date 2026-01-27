@@ -19,11 +19,9 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        // Check for saved theme or system preference
+        // Check for saved theme, default to 'dark' if none found
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+        const initialTheme = savedTheme || 'dark';
 
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setTheme(initialTheme);

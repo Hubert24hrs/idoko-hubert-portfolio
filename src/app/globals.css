@@ -7,55 +7,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================
-   CSS VARIABLES - LIGHT MODE (DEFAULT)
+/* ==========================================
+   CSS VARIABLES - DARK MODE (DEFAULT)
    ========================================== */
 :root {
-  /* Primary Brand Colors - Deep Blue/Indigo */
+  /* Primary Brand Colors */
   --primary-h: 230;
   --primary-s: 70%;
-  --primary-l: 50%;
+  --primary-l: 60%;
   --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
-  --primary-light: hsl(var(--primary-h), var(--primary-s), 60%);
-  --primary-dark: hsl(var(--primary-h), var(--primary-s), 40%);
+  --primary-light: hsl(var(--primary-h), calc(var(--primary-s) - 10%), 70%);
+  --primary-dark: hsl(var(--primary-h), var(--primary-s), 50%);
   --primary-gradient: linear-gradient(135deg, var(--primary) 0%, hsl(260, 70%, 55%) 100%);
 
-  /* Accent Colors - Vibrant Coral/Orange */
+  /* Accent Colors */
   --accent-h: 20;
   --accent-s: 90%;
-  --accent-l: 55%;
+  --accent-l: 60%;
   --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
   --accent-light: hsl(var(--accent-h), var(--accent-s), 65%);
   --accent-gradient: linear-gradient(135deg, var(--accent) 0%, hsl(35, 95%, 55%) 100%);
 
-  /* Background Colors */
-  --background: hsl(220, 20%, 98%);
-  --background-secondary: hsl(220, 15%, 95%);
-  --surface: hsl(0, 0%, 100%);
-  --surface-elevated: hsl(0, 0%, 100%);
+  /* Background Colors - Dark by Default */
+  --background: hsl(225, 25%, 8%);
+  --background-secondary: hsl(225, 20%, 12%);
+  --surface: hsl(225, 20%, 14%);
+  --surface-elevated: hsl(225, 18%, 18%);
 
   /* Text Colors */
-  --text-primary: hsl(220, 25%, 12%);
-  --text-secondary: hsl(220, 15%, 40%);
-  --text-muted: hsl(220, 10%, 55%);
-  --text-inverse: hsl(0, 0%, 100%);
+  --text-primary: hsl(220, 20%, 96%);
+  --text-secondary: hsl(220, 15%, 70%);
+  --text-muted: hsl(220, 10%, 50%);
+  --text-inverse: hsl(220, 25%, 12%); /* Inverted for dark mode buttons */
 
   /* Border & Divider */
-  --border: hsl(220, 15%, 88%);
-  --border-light: hsl(220, 15%, 92%);
-  --divider: hsl(220, 10%, 90%);
+  --border: hsl(225, 15%, 22%);
+  --border-light: hsl(225, 15%, 18%);
+  --divider: hsl(225, 10%, 20%);
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 40px rgba(79, 70, 229, 0.15);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 60px rgba(99, 102, 241, 0.2);
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Outfit', var(--font-sans);
 
-  /* Font Sizes (fluid typography) */
+  /* Font Sizes */
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
   --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
   --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
@@ -99,67 +100,37 @@
 }
 
 /* ==========================================
-   DARK MODE
+   LIGHT MODE (OPTIONAL)
    ========================================== */
-[data-theme="dark"],
-.dark {
-  --primary-l: 60%;
+[data-theme="light"],
+.light {
+  --primary-l: 50%;
   --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
-  --primary-light: hsl(var(--primary-h), calc(var(--primary-s) - 10%), 70%);
-  --primary-dark: hsl(var(--primary-h), var(--primary-s), 50%);
+  --primary-light: hsl(var(--primary-h), var(--primary-s), 60%);
+  --primary-dark: hsl(var(--primary-h), var(--primary-s), 40%);
 
-  --accent-l: 60%;
+  --accent-l: 55%;
   --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
 
-  --background: hsl(225, 25%, 8%);
-  --background-secondary: hsl(225, 20%, 12%);
-  --surface: hsl(225, 20%, 14%);
-  --surface-elevated: hsl(225, 18%, 18%);
+  --background: hsl(220, 20%, 98%);
+  --background-secondary: hsl(220, 15%, 95%);
+  --surface: hsl(0, 0%, 100%);
+  --surface-elevated: hsl(0, 0%, 100%);
 
-  --text-primary: hsl(220, 20%, 96%);
-  --text-secondary: hsl(220, 15%, 70%);
-  --text-muted: hsl(220, 10%, 50%);
+  --text-primary: hsl(220, 25%, 12%);
+  --text-secondary: hsl(220, 15%, 40%);
+  --text-muted: hsl(220, 10%, 55%);
+  --text-inverse: hsl(0, 0%, 100%);
 
-  --border: hsl(225, 15%, 22%);
-  --border-light: hsl(225, 15%, 18%);
-  --divider: hsl(225, 10%, 20%);
+  --border: hsl(220, 15%, 88%);
+  --border-light: hsl(220, 15%, 92%);
+  --divider: hsl(220, 10%, 90%);
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 60px rgba(99, 102, 241, 0.2);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --primary-l: 60%;
-    --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
-    --primary-light: hsl(var(--primary-h), calc(var(--primary-s) - 10%), 70%);
-    --primary-dark: hsl(var(--primary-h), var(--primary-s), 50%);
-
-    --accent-l: 60%;
-    --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
-
-    --background: hsl(225, 25%, 8%);
-    --background-secondary: hsl(225, 20%, 12%);
-    --surface: hsl(225, 20%, 14%);
-    --surface-elevated: hsl(225, 18%, 18%);
-
-    --text-primary: hsl(220, 20%, 96%);
-    --text-secondary: hsl(220, 15%, 70%);
-    --text-muted: hsl(220, 10%, 50%);
-
-    --border: hsl(225, 15%, 22%);
-    --border-light: hsl(225, 15%, 18%);
-    --divider: hsl(225, 10%, 20%);
-
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-    --shadow-glow: 0 0 60px rgba(99, 102, 241, 0.2);
-  }
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 40px rgba(79, 70, 229, 0.15);
 }
 
 /* ==========================================
