@@ -1,5 +1,30 @@
 {
-  "projects": [],
+  "projects": [
+    {
+      "id": "proj-apc-2027",
+      "title": "APC Enugu 2027 Election Platform",
+      "slug": "apc-enugu-2027-platform",
+      "description": "High-performance grassroots mobilization platform connecting voters to leadership through real-time membership registration, news updates, and an interactive polling unit locator for all 17 LGAs in Enugu State.",
+      "longDescription": "The APC Enugu 2027 project is a comprehensive digital advocacy solution designed to bridge the gap between political leadership and the electorate.\n\nKey features include:\n* **Polling Unit Locator:** A custom-built, responsive tool allowing voters to instantly find their specific polling unit across 17 Local Government Areas without page reloads.\n* **Membership Portal:** A seamless digital registration system that captures volunteer data and issues unique membership IDs.\n* **Admin Dashboard:** A secure, PHP-based backend for campaign managers to publish news, manage registered members, and oversee community forums.\n* **Community Forum:** An interactive space for constituents to discuss policies and receive updates.\n* **Performance First:** Architected with Vanilla JavaScript and native PHP to ensure sub-second load times on 3G mobile networks, making it accessible to the widest possible audience.",
+      "category": "fullstack",
+      "categoryLabel": "Civic Tech & Political Advocacy",
+      "technologies": [
+        "PHP",
+        "MySQL",
+        "JavaScript",
+        "HTML5",
+        "CSS3",
+        "FontAwesome"
+      ],
+      "imageUrl": "/images/projects/apc-enugu-2027.png",
+      "liveUrl": "https://apcgat2027enugu.com.ng",
+      "githubUrl": "https://github.com/Hubert24hrs/apc-enugu-2027",
+      "metrics": {},
+      "featured": true,
+      "published": true,
+      "order": 1
+    }
+  ],
   "certifications": [],
   "testimonials": [],
   "messages": [],
