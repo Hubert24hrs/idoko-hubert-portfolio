@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -48,10 +48,38 @@ model Certification {
   credentialId    String?
   credentialUrl   String?
   logoUrl         String?
+  category        String    @default("ai") // Added category
   published       Boolean   @default(true)
   order           Int       @default(0)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  content     String
+  author      String
+  role        String
+  company     String?
+  imageUrl    String?
+  link        String?
+  contact     String?
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  date      DateTime @default(now())
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SiteSettings {
@@ -66,5 +94,8 @@ model SiteSettings {
   kaggleUrl     String?
   mediumUrl     String?
   blogUrl       String?
+  facebookUrl   String?
+  instagramUrl  String?
+  tiktokUrl     String?
   updatedAt     DateTime  @updatedAt
 }
