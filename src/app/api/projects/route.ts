@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { auth } from "@/lib/auth";
 import { getProjects, createProject, updateProject, deleteProject } from '@/lib/data-service';
 
 // GET /api/projects - List all projects
@@ -17,6 +18,15 @@ export async function GET(request: Request) {
 
 // POST /api/projects - Create new project
 export async function POST(request: Request) {
+    const session = await auth();
+
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json(
+            { error: "Unauthorized" },
+            { status: 401 }
+        );
+    }
+
     try {
         const body = await request.json();
 
@@ -46,14 +56,29 @@ export async function POST(request: Request) {
         });
 
         return NextResponse.json({ project }, { status: 201 });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating project:', error);
+        if (error.code === 'P2002') {
+            return NextResponse.json(
+                { error: 'A project with this slug already exists' },
+                { status: 409 }
+            );
+        }
         return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
     }
 }
 
 // PUT /api/projects - Update project (id in body)
 export async function PUT(request: Request) {
+    const session = await auth();
+
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json(
+            { error: "Unauthorized" },
+            { status: 401 }
+        );
+    }
+
     try {
         const body = await request.json();
 
@@ -76,6 +101,15 @@ export async function PUT(request: Request) {
 
 // DELETE /api/projects - Delete project (id in query)
 export async function DELETE(request: Request) {
+    const session = await auth();
+
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json(
+            { error: "Unauthorized" },
+            { status: 401 }
+        );
+    }
+
     try {
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
