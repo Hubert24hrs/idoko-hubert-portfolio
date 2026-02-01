@@ -127,133 +127,101 @@ export default function AdminDashboard() {
     };
 
     return (
-        <div className={styles.adminLayout}>
-            {/* Sidebar */}
-            <aside className={styles.sidebar}>
-                <div className={styles.sidebarLogo}>IH Admin</div>
+        <>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Dashboard</h1>
+                <Link href="/admin/projects/new" className="btn btn-primary">
+                    Add Project
+                </Link>
+            </div>
 
-                <nav className={styles.sidebarNav}>
-                    {sidebarLinks.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={`${styles.sidebarLink} ${pathname === link.href ? styles.sidebarLinkActive : ''
-                                }`}
-                        >
-                            <link.icon size={20} />
-                            {link.label}
-                        </Link>
-                    ))}
-                </nav>
-
-                <div className={styles.sidebarFooter}>
-                    <Link href="/" className={styles.sidebarLink}>
-                        <Home size={20} />
-                        View Site
-                    </Link>
-                    <button className={styles.sidebarLink} style={{ width: '100%', border: 'none', background: 'none', cursor: 'pointer' }}>
-                        <LogOut size={20} />
-                        Logout
-                    </button>
-                </div>
-            </aside>
-
-            {/* Main Content */}
-            <main className={styles.mainContent}>
-                <div className={styles.pageHeader}>
-                    <h1 className={styles.pageTitle}>Dashboard</h1>
-                    <Link href="/admin/projects/new" className="btn btn-primary">
-                        Add Project
-                    </Link>
-                </div>
-
-                {/* Stats */}
-                <div className={styles.statsGrid}>
-                    {stats.map((stat) => (
-                        <div key={stat.label} className={styles.statCard}>
-                            <div className={`${styles.statIcon} ${styles[stat.iconClass]}`}>
-                                <stat.icon size={24} />
-                            </div>
-                            <div className={styles.statInfo}>
-                                <div className={styles.statValue}>{loading ? '...' : stat.value}</div>
-                                <div className={styles.statLabel}>{stat.label}</div>
-                            </div>
+            {/* Stats */}
+            <div className={styles.statsGrid}>
+                {stats.map((stat) => (
+                    <div key={stat.label} className={styles.statCard}>
+                        <div className={`${styles.statIcon} ${styles[stat.iconClass]}`}>
+                            <stat.icon size={24} />
                         </div>
-                    ))}
-                </div>
-
-                {/* Projects Table */}
-                <div className={styles.dataTable}>
-                    <div className={styles.tableHeader}>
-                        <h2 className={styles.tableTitle}>Recent Projects</h2>
+                        <div className={styles.statInfo}>
+                            <div className={styles.statValue}>{loading ? '...' : stat.value}</div>
+                            <div className={styles.statLabel}>{stat.label}</div>
+                        </div>
                     </div>
+                ))}
+            </div>
 
-                    <table className={styles.table}>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th>Featured</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
-                                <tr>
-                                    <td colSpan={5} style={{ textAlign: 'center', padding: '2rem' }}>
-                                        Loading...
-                                    </td>
-                                </tr>
-                            ) : projects.length === 0 ? (
-                                <tr>
-                                    <td colSpan={5} style={{ textAlign: 'center', padding: '2rem' }}>
-                                        No projects yet. <Link href="/admin/projects/new">Add one!</Link>
-                                    </td>
-                                </tr>
-                            ) : (
-                                projects.slice(0, 5).map((project) => (
-                                    <tr key={project.id}>
-                                        <td><strong>{project.title}</strong></td>
-                                        <td>{project.categoryLabel}</td>
-                                        <td>
-                                            <span className={`${styles.badge} ${project.published ? styles.badgeSuccess : styles.badgeWarning}`}>
-                                                {project.published ? 'Published' : 'Draft'}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {project.featured && (
-                                                <span className={`${styles.badge} ${styles.badgeSuccess}`}>
-                                                    Featured
-                                                </span>
-                                            )}
-                                        </td>
-                                        <td>
-                                            <button
-                                                className={styles.actionBtn}
-                                                onClick={() => toggleProjectPublished(project.id, project.published)}
-                                                title={project.published ? 'Unpublish' : 'Publish'}
-                                            >
-                                                {project.published ? <EyeOff size={16} /> : <Eye size={16} />}
-                                            </button>
-                                            <Link href={`/admin/projects/${project.id}/edit`} className={styles.actionBtn} title="Edit">
-                                                <Pencil size={16} />
-                                            </Link>
-                                            <button
-                                                className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
-                                                onClick={() => deleteProject(project.id)}
-                                                title="Delete"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+            {/* Projects Table */}
+            <div className={styles.dataTable}>
+                <div className={styles.tableHeader}>
+                    <h2 className={styles.tableTitle}>Recent Projects</h2>
                 </div>
-            </main>
-        </div>
+
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Featured</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {loading ? (
+                            <tr>
+                                <td colSpan={5} style={{ textAlign: 'center', padding: '2rem' }}>
+                                    Loading...
+                                </td>
+                            </tr>
+                        ) : projects.length === 0 ? (
+                            <tr>
+                                <td colSpan={5} style={{ textAlign: 'center', padding: '2rem' }}>
+                                    No projects yet. <Link href="/admin/projects/new">Add one!</Link>
+                                </td>
+                            </tr>
+                        ) : (
+                            projects.slice(0, 5).map((project) => (
+                                <tr key={project.id}>
+                                    <td><strong>{project.title}</strong></td>
+                                    <td>{project.categoryLabel}</td>
+                                    <td>
+                                        <span className={`${styles.badge} ${project.published ? styles.badgeSuccess : styles.badgeWarning}`}>
+                                            {project.published ? 'Published' : 'Draft'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {project.featured && (
+                                            <span className={`${styles.badge} ${styles.badgeSuccess}`}>
+                                                Featured
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td>
+                                        <button
+                                            className={styles.actionBtn}
+                                            onClick={() => toggleProjectPublished(project.id, project.published)}
+                                            title={project.published ? 'Unpublish' : 'Publish'}
+                                        >
+                                            {project.published ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        </button>
+                                        <Link href={`/admin/projects/${project.id}/edit`} className={styles.actionBtn} title="Edit">
+                                            <Pencil size={16} />
+                                        </Link>
+                                        <button
+                                            className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
+                                            onClick={() => deleteProject(project.id)}
+                                            title="Delete"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }
+

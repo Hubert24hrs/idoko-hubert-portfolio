@@ -99,3 +99,21 @@ model SiteSettings {
   tiktokUrl     String?
   updatedAt     DateTime  @updatedAt
 }
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  category    String   @default("tech")
+  tags        String[]
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  author      String?  @default("Idoko Hubert")
+  readingTime Int?     @default(5)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

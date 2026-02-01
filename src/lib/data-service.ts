@@ -103,7 +103,7 @@ export async function getProjects(publishedOnly = true): Promise<Project[]> {
         orderBy: { order: 'asc' }
     });
 
-    return projects.map(p => ({
+    return projects.map((p) => ({
         ...p,
         category: p.category as 'ai' | 'data' | 'fullstack', // Cast or validate
         categoryLabel: getCategoryLabel(p.category),
@@ -221,7 +221,7 @@ export async function getCertifications(publishedOnly = true): Promise<Certifica
     // Sort function: AI (1) > Data (2) > Fullstack (3), then by order
     const categoryOrder: Record<string, number> = { ai: 1, data: 2, fullstack: 3 };
 
-    return certs.map(c => ({
+    return certs.map((c) => ({
         ...c,
         category: c.category as 'ai' | 'data' | 'fullstack', // Typo check in DB?
         issueDate: c.issueDate.toISOString().split('T')[0], // Convert Date to YYYY-MM-DD
@@ -390,4 +390,58 @@ export async function updateSettings(updates: Partial<SiteSettings>): Promise<Si
         mediumUrl: s.mediumUrl || undefined,
         blogUrl: s.blogUrl || undefined,
     };
+}
+
+// ============== Blog Posts ==============
+
+export interface BlogPost {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string | null;
+    content: string;
+    coverImage: string | null;
+    category: string;
+    tags: string[];
+    featured: boolean;
+    published: boolean;
+    author: string | null;
+    readingTime: number | null;
+    publishedAt: Date | null;
+    date: string; // for compatibility with legacy expectations if any
+}
+
+export async function getPosts(publishedOnly = true): Promise<BlogPost[]> {
+    try {
+        const where = publishedOnly ? { published: true } : {};
+        const posts = await prisma.post.findMany({
+            where,
+            orderBy: { publishedAt: 'desc' }
+        });
+
+        return posts.map((p) => ({
+            ...p,
+            tags: p.tags || [],
+            date: p.publishedAt ? p.publishedAt.toISOString() : p.createdAt.toISOString(),
+        }));
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        return [];
+    }
+}
+
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+    try {
+        const p = await prisma.post.findUnique({ where: { slug } });
+        if (!p) return null;
+
+        return {
+            ...p,
+            tags: p.tags || [],
+            date: p.publishedAt ? p.publishedAt.toISOString() : p.createdAt.toISOString(),
+        };
+    } catch (error) {
+        console.error("Error fetching post by slug:", error);
+        return null;
+    }
 }
