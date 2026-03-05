@@ -74,24 +74,16 @@
     width: 100%;
 }
 
-.themeToggle {
+.toggleWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.mobileToggleWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-lg);
-    background: var(--background-secondary);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    color: var(--text-secondary);
-}
-
-.themeToggle:hover {
-    background: var(--surface);
-    color: var(--primary);
-    border-color: var(--primary);
+    padding: var(--space-md) 0;
 }
 
 .mobileMenuBtn {

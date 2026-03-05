@@ -2,8 +2,16 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Download, ArrowRight, Brain, Code, Cloud, Database } from 'lucide-react';
+import { Download, ArrowRight } from 'lucide-react';
+import { BreakableCard } from './BreakableCard';
 import styles from './Hero.module.css';
+
+const heroCards = [
+    { title: 'AI/ML', description: 'Building intelligent systems with deep learning and NLP' },
+    { title: 'Full-Stack', description: 'End-to-end web and mobile applications' },
+    { title: 'Cloud', description: 'Scalable cloud-native infrastructure and DevOps' },
+    { title: 'Data', description: 'Pipelines, analytics, and data engineering' },
+];
 
 export default function Hero() {
     return (
@@ -88,33 +96,16 @@ export default function Hero() {
                         />
                     </div>
 
-                    {/* Floating Cards */}
-                    <div className={`${styles.floatingCard} ${styles.floatingCard1}`} aria-hidden="true">
-                        <div className={`${styles.cardIcon} ${styles.cardIconPrimary}`}>
-                            <Brain size={16} />
-                        </div>
-                        <span>AI/ML Engineer</span>
-                    </div>
-
-                    <div className={`${styles.floatingCard} ${styles.floatingCard2}`} aria-hidden="true">
-                        <div className={`${styles.cardIcon} ${styles.cardIconAccent}`}>
-                            <Code size={16} />
-                        </div>
-                        <span>Full-Stack Dev</span>
-                    </div>
-
-                    <div className={`${styles.floatingCard} ${styles.floatingCard3}`} aria-hidden="true">
-                        <div className={`${styles.cardIcon} ${styles.cardIconAccent}`}>
-                            <Cloud size={16} />
-                        </div>
-                        <span>Cloud/DevOps Engineer</span>
-                    </div>
-
-                    <div className={`${styles.floatingCard} ${styles.floatingCard4}`} aria-hidden="true">
-                        <div className={`${styles.cardIcon} ${styles.cardIconPrimary}`}>
-                            <Database size={16} />
-                        </div>
-                        <span>Data Specialist</span>
+                    {/* Breakable Floating Cards */}
+                    <div className={styles.breakableCardsGrid}>
+                        {heroCards.map((card) => (
+                            <div key={card.title} className={styles.breakableCardWrapper}>
+                                <BreakableCard
+                                    title={card.title}
+                                    description={card.description}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

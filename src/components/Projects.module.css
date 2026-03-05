@@ -15,6 +15,30 @@
     margin-top: var(--space-md);
 }
 
+/* 3D Folder Grid */
+.foldersGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    justify-items: center;
+}
+
+@media (min-width: 1024px) {
+    .foldersGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .foldersGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
 /* Category Filters */
 .categoryFilters {
     display: flex;

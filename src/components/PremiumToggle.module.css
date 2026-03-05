@@ -1,0 +1,185 @@
+/* ==========================================
+   PREMIUM TOGGLE SWITCH
+   Bouncy dark/light mode toggle
+   ========================================== */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: color 300ms ease;
+}
+
+.labelChecked {
+  color: var(--text-primary);
+}
+
+.labelUnchecked {
+  color: var(--text-muted);
+}
+
+/* Track (the outer pill) */
+.track {
+  position: relative;
+  height: 2rem;        /* 32px */
+  width: 3.5rem;       /* 56px */
+  border-radius: 9999px;
+  padding: 0.25rem;    /* 4px */
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: all 500ms ease-out;
+}
+
+.track:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.trackChecked {
+  background-color: var(--text-primary);
+}
+
+.trackUnchecked {
+  background-color: var(--border);
+}
+
+/* Glow effect around the track */
+.glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  transition: opacity 500ms ease;
+  pointer-events: none;
+}
+
+.glowOn {
+  opacity: 1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.glowOff {
+  opacity: 0;
+}
+
+/* Inner gradient overlay on the track */
+.trackInner {
+  position: absolute;
+  inset: 2px;
+  border-radius: 9999px;
+  transition: all 500ms ease;
+  pointer-events: none;
+}
+
+.trackInnerChecked {
+  background: linear-gradient(to bottom, var(--text-primary), var(--text-primary));
+}
+
+.trackInnerUnchecked {
+  background: transparent;
+}
+
+/* Thumb (the sliding circle) */
+.thumb {
+  position: relative;
+  height: 1.5rem;       /* 24px */
+  width: 1.5rem;        /* 24px */
+  border-radius: 9999px;
+  background-color: var(--background);
+  box-shadow: var(--shadow-md);
+  transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.thumbChecked {
+  transform: translateX(1.5rem);
+}
+
+.thumbUnchecked {
+  transform: translateX(0);
+}
+
+.thumbPressed {
+  transform: scale(0.9);
+  transition-duration: 150ms;
+}
+
+.thumbPressedChecked {
+  transform: translateX(1.5rem) scale(0.9);
+  transition-duration: 150ms;
+}
+
+/* Thumb inner shine gradient */
+.thumbShine {
+  position: absolute;
+  inset: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, var(--background), var(--background), var(--border));
+  pointer-events: none;
+}
+
+/* Thumb highlight */
+.thumbHighlight {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.3), transparent, transparent);
+  pointer-events: none;
+}
+
+/* Status indicator dot inside the thumb */
+.dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  transition: all 500ms ease;
+}
+
+.dotChecked {
+  height: 0.5rem;
+  width: 0.5rem;
+  background-color: var(--text-primary);
+  opacity: 1;
+}
+
+.dotUnchecked {
+  height: 0.375rem;
+  width: 0.375rem;
+  background-color: var(--text-muted);
+  opacity: 1;
+}
+
+/* Ripple / ping effect on toggle */
+.ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  transition: all 700ms ease;
+  pointer-events: none;
+}
+
+.rippleOn {
+  animation: ping 700ms ease-out forwards;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.rippleOff {
+  opacity: 0;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}

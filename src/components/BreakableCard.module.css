@@ -1,0 +1,211 @@
+/* ==========================================
+   BREAKABLE CARD - KINETIC SHATTER EFFECT
+   Physics-based draggable card with crack/break
+   ========================================== */
+
+/* Container / Wrapper */
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Shadow remnant (background "ghost" when card breaks) */
+.shadowRemnant {
+    position: absolute;
+    inset: 0;
+    background-color: var(--background-secondary);
+    border: 4px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.shadowRemnant span {
+    color: var(--text-muted);
+    font-weight: 900;
+    font-size: var(--text-2xl);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+/* Respawn loading bar */
+.respawnBar {
+    width: 6rem;
+    height: 1rem;
+    border: 2px solid var(--border);
+    background-color: var(--background);
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.respawnFill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--text-muted);
+    transition: width 75ms linear;
+}
+
+/* Debris layer */
+.debrisLayer {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    overflow: visible;
+}
+
+/* Individual debris chunk */
+.debrisChunk {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    pointer-events: none;
+    z-index: 30;
+    overflow: visible;
+}
+
+/* Main interactive card */
+.card {
+    position: relative;
+    z-index: 10;
+    background-color: var(--surface);
+    border: 3px solid var(--text-primary);
+    padding: 1.5rem;
+    box-shadow: 4px 4px 0px var(--text-primary);
+    cursor: grab;
+    user-select: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: background-color 150ms ease;
+}
+
+.card:active {
+    cursor: grabbing;
+}
+
+.cardBroken {
+    pointer-events: none;
+}
+
+.cardFlashing {
+    background-color: hsla(0, 80%, 90%, 0.3);
+}
+
+/* Hover wiggle when idle */
+.cardIdle {
+    animation: hover-wiggle 0.8s ease-in-out infinite;
+}
+
+/* Card header */
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.cardTitle {
+    font-weight: 900;
+    font-size: var(--text-3xl);
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--text-primary);
+}
+
+.cardDot {
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--text-primary);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Card body */
+.cardBody {
+    font-weight: 700;
+    font-size: var(--text-lg);
+    line-height: 1.25;
+    color: var(--text-primary);
+}
+
+/* Card footer */
+.cardFooter {
+    margin-top: 2rem;
+    border-top: 2px solid var(--text-primary);
+    padding-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    font-family: monospace;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.cardFooterDanger {
+    color: hsl(0, 80%, 50%);
+    font-weight: 700;
+}
+
+/* Crack overlay */
+.crackSvg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 20;
+}
+
+/* Red damage overlay */
+.damageOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: hsl(0, 80%, 50%);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+/* Hidden SVG for masks */
+.hiddenSvg {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+/* ==========================================
+   KEYFRAME ANIMATIONS
+   ========================================== */
+
+@keyframes hover-wiggle {
+
+    0%,
+    100% {
+        transform: rotate(-1deg);
+    }
+
+    50% {
+        transform: rotate(1deg);
+    }
+}
+
+@keyframes debris-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(180deg);
+        opacity: 0;
+    }
+}
