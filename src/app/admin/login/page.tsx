@@ -26,15 +26,9 @@ function LoginForm() {
             const result = await signIn('credentials', {
                 email,
                 password,
-                redirect: false,
+                redirect: true,
+                callbackUrl: '/admin',
             });
-
-            if (result?.error) {
-                setError('Invalid email or password');
-            } else {
-                router.push(callbackUrl);
-                router.refresh();
-            }
         } catch {
             setError('An error occurred. Please try again.');
         } finally {
