@@ -5,6 +5,19 @@
  */
 
 import { prisma } from '@/lib/db';
+import portfolioData from '@/data/portfolio-data.json';
+
+// JSON fallback helpers
+function getJsonProjects() {
+    return (portfolioData.projects || []).map((p: any) => ({
+        ...p,
+        categoryLabel: getCategoryLabel(p.category),
+        technologies: p.technologies || [],
+        metrics: p.metrics || {},
+    }));
+}
+function getJsonCertifications() { return portfolioData.certifications || []; }
+function getJsonTestimonials() { return portfolioData.testimonials || []; }
 
 // Types - Keeping these consistent with frontend expectations
 export interface Project {
@@ -80,6 +93,7 @@ export interface SiteSettings {
 
 // Helper to update settings since it is a singleton in Schema (id='settings')
 async function getSettingsRecord() {
+    if (!prisma) return null;
     let settings = await prisma.siteSettings.findUnique({ where: { id: 'settings' } });
     if (!settings) {
         settings = await prisma.siteSettings.create({
@@ -97,13 +111,16 @@ async function getSettingsRecord() {
 // ============== Projects ==============
 
 export async function getProjects(publishedOnly = true): Promise<Project[]> {
+    if (!prisma) {
+        return getJsonProjects().filter((p: any) => !publishedOnly || p.published);
+    }
     const where = publishedOnly ? { published: true } : {};
     const projects = await prisma.project.findMany({
         where,
         orderBy: { order: 'asc' }
     });
 
-    return projects.map((p) => ({
+    return projects.map((p: any) => ({
         ...p,
         category: p.category as 'ai' | 'data' | 'fullstack', // Cast or validate
         categoryLabel: getCategoryLabel(p.category),
@@ -117,6 +134,10 @@ export async function getProjects(publishedOnly = true): Promise<Project[]> {
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
+    if (!prisma) {
+        const projects = getJsonProjects();
+        return projects.find((p: any) => p.slug === slug) || null;
+    }
     const p = await prisma.project.findUnique({ where: { slug } });
     if (!p) return null;
 
@@ -215,13 +236,16 @@ function getCategoryLabel(category: string): string {
 // ============== Certifications ==============
 
 export async function getCertifications(publishedOnly = true): Promise<Certification[]> {
+    if (!prisma) {
+        return getJsonCertifications().filter((c: any) => !publishedOnly || c.published);
+    }
     const where = publishedOnly ? { published: true } : {};
     const certs = await prisma.certification.findMany({ where });
 
     // Sort function: AI (1) > Data (2) > Fullstack (3), then by order
     const categoryOrder: Record<string, number> = { ai: 1, data: 2, fullstack: 3 };
 
-    return certs.map((c) => ({
+    return certs.map((c: any) => ({
         ...c,
         category: c.category as 'ai' | 'data' | 'fullstack', // Typo check in DB?
         issueDate: c.issueDate.toISOString().split('T')[0], // Convert Date to YYYY-MM-DD
@@ -229,7 +253,7 @@ export async function getCertifications(publishedOnly = true): Promise<Certifica
         credentialId: c.credentialId || undefined,
         credentialUrl: c.credentialUrl || undefined,
         logoUrl: c.logoUrl || undefined,
-    })).sort((a, b) => {
+    })).sort((a: any, b: any) => {
         const catA = categoryOrder[a.category] || 99;
         const catB = categoryOrder[b.category] || 99;
         if (catA !== catB) return catA - catB;
@@ -315,7 +339,9 @@ export async function deleteCertification(id: string): Promise<boolean> {
 // I need to add Testimonials and Messages to Schema!
 
 export async function getTestimonials(publishedOnly = true): Promise<Testimonial[]> {
-    // Return empty if not implemented yet or implement logic if I add proper schema
+    if (!prisma) {
+        return getJsonTestimonials().filter((t: any) => !publishedOnly || t.published);
+    }
     return [];
 }
 
@@ -353,6 +379,21 @@ export async function deleteMessage(id: string): Promise<boolean> {
 
 export async function getSettings(): Promise<SiteSettings> {
     const s = await getSettingsRecord();
+    if (!s) {
+        const fallback = (portfolioData as any).settings || {};
+        return {
+            heroTitle: fallback.heroTitle || 'Idoko Hubert',
+            heroSubtitle: fallback.heroSubtitle || '',
+            aboutContent: fallback.aboutContent || '',
+            resumeUrl: fallback.resumeUrl || undefined,
+            linkedinUrl: fallback.linkedinUrl || undefined,
+            githubUrl: fallback.githubUrl || undefined,
+            twitterUrl: fallback.twitterUrl || undefined,
+            kaggleUrl: fallback.kaggleUrl || undefined,
+            mediumUrl: fallback.mediumUrl || undefined,
+            blogUrl: fallback.blogUrl || undefined,
+        };
+    }
     return {
         heroTitle: s.heroTitle,
         heroSubtitle: s.heroSubtitle,
@@ -412,6 +453,7 @@ export interface BlogPost {
 }
 
 export async function getPosts(publishedOnly = true): Promise<BlogPost[]> {
+    if (!prisma) return [];
     try {
         const where = publishedOnly ? { published: true } : {};
         const posts = await prisma.post.findMany({
@@ -419,7 +461,7 @@ export async function getPosts(publishedOnly = true): Promise<BlogPost[]> {
             orderBy: { publishedAt: 'desc' }
         });
 
-        return posts.map((p) => ({
+        return posts.map((p: any) => ({
             ...p,
             tags: p.tags || [],
             date: p.publishedAt ? p.publishedAt.toISOString() : p.createdAt.toISOString(),
@@ -431,6 +473,7 @@ export async function getPosts(publishedOnly = true): Promise<BlogPost[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+    if (!prisma) return null;
     try {
         const p = await prisma.post.findUnique({ where: { slug } });
         if (!p) return null;

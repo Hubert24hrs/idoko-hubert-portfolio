@@ -242,6 +242,78 @@
     color: #ef4444;
 }
 
+.actionButtons {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+}
+
+/* Mobile Menu Button — hidden on desktop */
+.mobileMenuBtn {
+    display: none;
+    position: fixed;
+    top: var(--space-md);
+    left: var(--space-md);
+    z-index: 1001;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+}
+
+.mobileMenuBtn:hover {
+    background: var(--background-secondary);
+}
+
+/* Mobile Close Button inside sidebar */
+.mobileCloseBtn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.mobileCloseBtn:hover {
+    color: var(--text-primary);
+    background: var(--background-secondary);
+}
+
+/* Sidebar header (logo + close button) */
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2xl);
+}
+
+/* Move sidebarLogo margin from self to sidebarHeader */
+.sidebarHeader .sidebarLogo {
+    margin-bottom: 0;
+}
+
+/* Overlay backdrop */
+.sidebarOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(4px);
+}
+
+/* Text muted helper */
+.textMuted {
+    color: var(--text-muted);
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .statsGrid {
@@ -250,15 +322,105 @@
 }
 
 @media (max-width: 768px) {
-    .sidebar {
-        display: none;
+    /* Show hamburger button */
+    .mobileMenuBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
+    /* Show close button inside sidebar */
+    .mobileCloseBtn {
+        display: flex;
+    }
+
+    /* Show overlay when sidebar is open */
+    .sidebarOverlay {
+        display: block;
+    }
+
+    /* Sidebar off-screen by default, slides in */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+    }
+
+    .sidebarOpen {
+        transform: translateX(0);
+    }
+
+    /* Main content full width */
     .mainContent {
         margin-left: 0;
+        padding: var(--space-lg);
+        padding-top: calc(var(--space-lg) + 56px); /* Space for hamburger button */
     }
 
+    /* Stack page header */
+    .pageHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+
+    .pageTitle {
+        font-size: var(--text-xl);
+    }
+
+    /* Stats grid single column */
     .statsGrid {
         grid-template-columns: 1fr;
+    }
+
+    .statCard {
+        padding: var(--space-md);
+    }
+
+    /* Table horizontal scroll */
+    .dataTable {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        min-width: 600px;
+    }
+
+    .table th,
+    .table td {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-xs);
+        white-space: nowrap;
+    }
+
+    /* Action buttons compact */
+    .actionButtons {
+        gap: 2px;
+    }
+
+    .actionBtn {
+        padding: var(--space-xs);
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .mainContent {
+        padding: var(--space-md);
+        padding-top: calc(var(--space-md) + 56px);
+    }
+
+    .pageTitle {
+        font-size: var(--text-lg);
+    }
+
+    .statValue {
+        font-size: var(--text-xl);
+    }
+
+    .statIcon {
+        width: 40px;
+        height: 40px;
     }
 }

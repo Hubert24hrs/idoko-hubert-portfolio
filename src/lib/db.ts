@@ -1,25 +1,21 @@
 /**
  * Database Client Configuration
  * 
- * SETUP INSTRUCTIONS:
- * 1. Create .env file with: DATABASE_URL="file:./dev.db"
- * 2. Run: npx prisma generate
- * 3. Run: npx prisma db push
- * 4. Uncomment the Prisma imports below
- * 
- * Once Prisma is configured, replace this stub with the actual client.
+ * Falls back gracefully when Prisma client is not generated,
+ * allowing the app to use JSON data fallback.
  */
 
-import { PrismaClient } from '@prisma/client'
+let prisma: any = null;
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient }
+try {
+    const { PrismaClient } = require('@prisma/client');
+    const globalForPrisma = global as unknown as { prisma: any };
+    prisma = globalForPrisma.prisma || new PrismaClient({ log: ['query'] });
+    if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+} catch (e) {
+    console.warn('Prisma client not available, using JSON data fallback.');
+    prisma = null;
+}
 
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log: ['query'],
-  })
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-
+export { prisma };
 export default prisma;

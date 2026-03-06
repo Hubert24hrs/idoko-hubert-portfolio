@@ -9,10 +9,10 @@ export async function GET(request: Request) {
         const publishedOnly = searchParams.get('published') !== 'false';
 
         const projects = await getProjects(publishedOnly);
-        return NextResponse.json({ projects });
+        return NextResponse.json({ success: true, data: projects });
     } catch (error) {
         console.error('Error fetching projects:', error);
-        return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
+        return NextResponse.json({ success: false, error: 'Failed to fetch projects' }, { status: 500 });
     }
 }
 
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
     if (!session || session.user?.role !== 'admin') {
         return NextResponse.json(
-            { error: "Unauthorized" },
+            { success: false, error: "Unauthorized" },
             { status: 401 }
         );
     }
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         // Basic validation
         if (!body.title || !body.slug || !body.description || !body.category) {
             return NextResponse.json(
-                { error: 'Missing required fields: title, slug, description, category' },
+                { success: false, error: 'Missing required fields: title, slug, description, category' },
                 { status: 400 }
             );
         }
@@ -55,16 +55,16 @@ export async function POST(request: Request) {
             order: body.order || 0,
         });
 
-        return NextResponse.json({ project }, { status: 201 });
+        return NextResponse.json({ success: true, data: project }, { status: 201 });
     } catch (error: any) {
         console.error('Error creating project:', error);
         if (error.code === 'P2002') {
             return NextResponse.json(
-                { error: 'A project with this slug already exists' },
+                { success: false, error: 'A project with this slug already exists' },
                 { status: 409 }
             );
         }
-        return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
+        return NextResponse.json({ success: false, error: 'Failed to create project' }, { status: 500 });
     }
 }
 
@@ -74,7 +74,7 @@ export async function PUT(request: Request) {
 
     if (!session || session.user?.role !== 'admin') {
         return NextResponse.json(
-            { error: "Unauthorized" },
+            { success: false, error: "Unauthorized" },
             { status: 401 }
         );
     }
@@ -83,19 +83,19 @@ export async function PUT(request: Request) {
         const body = await request.json();
 
         if (!body.id) {
-            return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
+            return NextResponse.json({ success: false, error: 'Project ID is required' }, { status: 400 });
         }
 
         const project = await updateProject(body.id, body);
 
         if (!project) {
-            return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ project });
+        return NextResponse.json({ success: true, data: project });
     } catch (error) {
         console.error('Error updating project:', error);
-        return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
+        return NextResponse.json({ success: false, error: 'Failed to update project' }, { status: 500 });
     }
 }
 
@@ -105,7 +105,7 @@ export async function DELETE(request: Request) {
 
     if (!session || session.user?.role !== 'admin') {
         return NextResponse.json(
-            { error: "Unauthorized" },
+            { success: false, error: "Unauthorized" },
             { status: 401 }
         );
     }
@@ -115,19 +115,19 @@ export async function DELETE(request: Request) {
         const id = searchParams.get('id');
 
         if (!id) {
-            return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
+            return NextResponse.json({ success: false, error: 'Project ID is required' }, { status: 400 });
         }
 
         const success = await deleteProject(id);
 
         if (!success) {
-            return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ success: true });
+        return NextResponse.json({ success: true, data: null });
     } catch (error) {
         console.error('Error deleting project:', error);
-        return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
+        return NextResponse.json({ success: false, error: 'Failed to delete project' }, { status: 500 });
     }
 }
 

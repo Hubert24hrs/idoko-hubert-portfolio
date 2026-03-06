@@ -1,6 +1,10 @@
+'use client';
+
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
-import { Calendar, ExternalLink, Award } from 'lucide-react';
+import { Calendar, ExternalLink, Award, Cpu, Database, LayoutPanelTop, Layers } from 'lucide-react';
 import styles from './Certifications.module.css';
+import { LimelightNav } from './ui/limelight-nav';
 
 interface Certification {
     id: string;
@@ -16,9 +20,24 @@ interface CertificationsProps {
     data: Certification[];
 }
 
+const CATEGORIES = [
+    { id: 'all', icon: <Layers size={20} />, label: 'All' },
+    { id: 'ai', icon: <Cpu size={20} />, label: 'AI' },
+    { id: 'data', icon: <Database size={20} />, label: 'Data' },
+    { id: 'fullstack', icon: <LayoutPanelTop size={20} />, label: 'Fullstack' },
+];
+
 export default function Certifications({ data }: CertificationsProps) {
+    const [activeTab, setActiveTab] = useState(0);
+
     // Generate initials for logo placeholder if no logoUrl
     const getInitials = (name: string) => name.split(' ').map(n => n[0]).slice(0, 2).join('');
+
+    const filteredData = useMemo(() => {
+        const categoryId = CATEGORIES[activeTab].id;
+        if (categoryId === 'all') return data;
+        return data.filter(cert => cert.category === categoryId);
+    }, [data, activeTab]);
 
     return (
         <section id="certifications" className={styles.certifications} aria-labelledby="certifications-title">
@@ -32,13 +51,22 @@ export default function Certifications({ data }: CertificationsProps) {
                 </p>
             </div>
 
-            {(!data || data.length === 0) ? (
+            <div className={styles.filterContainer}>
+                <LimelightNav
+                    items={CATEGORIES}
+                    defaultActiveIndex={0}
+                    onTabChange={(index) => setActiveTab(index)}
+                    className="max-w-md"
+                />
+            </div>
+
+            {(!filteredData || filteredData.length === 0) ? (
                 <div className={styles.emptyState}>
-                    <p>Certifications coming soon...</p>
+                    <p>No certifications found in this category.</p>
                 </div>
             ) : (
                 <div className={styles.certificationsGrid}>
-                    {data.map((cert) => (
+                    {filteredData.map((cert) => (
                         <article key={cert.id} className={styles.certCard}>
                             <div className={styles.certHeader}>
                                 <div className={styles.certLogo}>

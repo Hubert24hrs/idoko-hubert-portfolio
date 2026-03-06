@@ -28,6 +28,7 @@ export default function AddProjectPage() {
         githubUrl: '',
         featured: false,
         published: true,
+        order: 0,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -377,6 +378,20 @@ export default function AddProjectPage() {
                                 />
                                 <label htmlFor="published" className={styles.formLabel}>Published</label>
                             </div>
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="order" className={styles.formLabel}>Sort Order</label>
+                            <input
+                                type="number"
+                                id="order"
+                                name="order"
+                                value={formData.order}
+                                onChange={handleChange}
+                                className={styles.formInput}
+                                min={0}
+                            />
+                            <span className={styles.formHint}>Lower numbers appear first</span>
                         </div>
                     </div>
 

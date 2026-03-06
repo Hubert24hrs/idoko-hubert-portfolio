@@ -58,6 +58,7 @@ export default function EditProjectPage() {
         githubUrl: '',
         featured: false,
         published: true,
+        order: 0,
     });
 
     useEffect(() => {
@@ -65,7 +66,8 @@ export default function EditProjectPage() {
             try {
                 const res = await fetch('/api/projects?published=false');
                 const data = await res.json();
-                const p = data.projects?.find((item: Project) => item.id === id);
+                const projects = data.data || data.projects || [];
+                const p = projects.find((item: Project) => item.id === id);
 
                 if (p) {
                     setFormData({
@@ -81,6 +83,7 @@ export default function EditProjectPage() {
                         githubUrl: p.githubUrl || '',
                         featured: p.featured || false,
                         published: p.published !== false,
+                        order: p.order || 0,
                     });
                 } else {
                     setError('Project not found');
@@ -364,6 +367,20 @@ export default function EditProjectPage() {
                                 />
                                 <label htmlFor="published" className={styles.formLabel}>Published</label>
                             </div>
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="order" className={styles.formLabel}>Sort Order</label>
+                            <input
+                                type="number"
+                                id="order"
+                                name="order"
+                                value={formData.order}
+                                onChange={handleChange}
+                                className={styles.formInput}
+                                min={0}
+                            />
+                            <span className={styles.formHint}>Lower numbers appear first</span>
                         </div>
                     </div>
 

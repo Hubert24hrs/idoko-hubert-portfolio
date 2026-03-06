@@ -61,8 +61,8 @@ export default function AdminDashboard() {
                 const projectsData = await projectsRes.json();
                 const certsData = await certsRes.json();
 
-                setProjects(projectsData.projects || []);
-                setCertifications(certsData.certifications || []);
+                setProjects(projectsData.data || []);
+                setCertifications(certsData.certifications || certsData.data || []);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {

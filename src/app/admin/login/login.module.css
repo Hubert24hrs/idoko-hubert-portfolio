@@ -154,3 +154,30 @@
     border-radius: var(--radius-sm);
     font-family: monospace;
 }
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .loginPage {
+        padding: var(--space-md);
+        align-items: flex-start;
+        padding-top: 10vh;
+    }
+
+    .loginCard {
+        padding: var(--space-lg);
+        border-radius: var(--radius-xl);
+    }
+
+    .loginLogo {
+        font-size: var(--text-xl);
+    }
+
+    .loginTitle {
+        font-size: var(--text-lg);
+    }
+
+    .formInput {
+        font-size: 16px;
+        /* Prevents iOS zoom on focus */
+    }
+}

@@ -34,7 +34,7 @@ export default function AdminProjects() {
         try {
             const res = await fetch('/api/projects?published=false');
             const data = await res.json();
-            setProjects(data.projects || []);
+            setProjects(data.data || data.projects || []);
         } catch (error) {
             console.error('Error fetching projects:', error);
         } finally {

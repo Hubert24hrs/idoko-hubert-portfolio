@@ -280,9 +280,63 @@
     .formContainer {
         margin-left: 0;
         padding: var(--space-lg);
+        padding-top: calc(var(--space-lg) + 56px);
+        /* Space for hamburger */
     }
 
     .formGrid {
         grid-template-columns: 1fr;
+    }
+
+    .form {
+        padding: var(--space-lg);
+    }
+
+    .formTitle {
+        font-size: var(--text-xl);
+    }
+
+    /* Media upload grid stacks on mobile */
+    .mediaUploadContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .uploadLabel {
+        padding: var(--space-lg);
+    }
+
+    /* Actions stack on mobile */
+    .formActions {
+        flex-direction: column;
+    }
+
+    .submitBtn,
+    .cancelBtn {
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .formContainer {
+        padding: var(--space-md);
+        padding-top: calc(var(--space-md) + 56px);
+    }
+
+    .form {
+        padding: var(--space-md);
+    }
+
+    .formTextarea {
+        min-height: 80px;
+    }
+
+    .formInput,
+    .formTextarea,
+    .formSelect {
+        font-size: 16px;
+        /* Prevents iOS zoom on focus */
     }
 }

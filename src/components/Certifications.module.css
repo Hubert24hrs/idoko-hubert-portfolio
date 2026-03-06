@@ -14,14 +14,24 @@
     font-size: var(--text-lg);
     color: var(--text-secondary);
     margin-top: var(--space-md);
+    line-height: 1.6;
+}
+
+.filterContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
 .certificationsGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
     max-width: 1280px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0 var(--space-lg);
 }
 
