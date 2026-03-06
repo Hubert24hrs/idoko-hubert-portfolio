@@ -2,10 +2,9 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { compare, hash } from "bcryptjs"
 
-// Admin credentials - update these or use environment variables
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "iheanachohubert@gmail.com"
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH ||
-    "$2b$10$wCHg2f6honVD.J39HLXTyaxGy/gC18m5fBGPFSCH" // "Iheanacho25" hashed
+// Admin credentials - set to user requested values
+const ADMIN_EMAIL = "iheanachohubert@gmail.com"
+const ADMIN_PASSWORD_HASH = "$2b$10$wCHg2f6honVD.J39HLXTyaxGy/gC18m5fBGPFSCH" // "Iheanacho25" hashed
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
