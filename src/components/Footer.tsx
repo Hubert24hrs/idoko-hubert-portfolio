@@ -3,11 +3,11 @@ import { Linkedin, Github, Twitter, Heart, Instagram, Facebook } from 'lucide-re
 import styles from './Footer.module.css';
 
 const navLinks = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Certifications', href: '#certifications' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'About', href: '/#about' },
+    { label: 'Skills', href: '/#skills' },
+    { label: 'Projects', href: '/#projects' },
+    { label: 'Certifications', href: '/#certifications' },
+    { label: 'Contact', href: '/#contact' },
     { label: 'Blog', href: '/blog' },
 ];
 

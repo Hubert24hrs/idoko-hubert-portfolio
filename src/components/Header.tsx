@@ -7,12 +7,12 @@ import { PremiumToggle } from './PremiumToggle';
 import styles from './Header.module.css';
 
 const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Certifications', href: '#certifications' },
-    { label: 'Testimonials', href: '#testimonials' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'About', href: '/#about' },
+    { label: 'Skills', href: '/#skills' },
+    { label: 'Projects', href: '/#projects' },
+    { label: 'Certifications', href: '/#certifications' },
+    { label: 'Testimonials', href: '/#testimonials' },
+    { label: 'Contact', href: '/#contact' },
     { label: 'Blog', href: '/blog' },
 ];
 
