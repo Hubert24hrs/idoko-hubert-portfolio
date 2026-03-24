@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { AuthProvider } from "@/components/AuthProvider";
+import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 const baseUrl = 'https://idokohubert.com';
@@ -137,7 +138,7 @@ const personSchema = {
     width: 400,
     height: 400,
   },
-  email: 'iheanachohubert@gmail.com',
+  email: 'hubert@idokohubert.com',
   sameAs: [
     'https://www.linkedin.com/in/hubert-idoko-47b817342',
     'https://github.com/Hubert24hrs',
@@ -323,6 +324,7 @@ export default function RootLayout({
         </a>
         <AuthProvider>
           {children}
+          <CookieConsent />
         </AuthProvider>
       </body>
     </html>

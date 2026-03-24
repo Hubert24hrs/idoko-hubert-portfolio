@@ -28,16 +28,8 @@ const TikTokIcon = () => (
 const socialLinks = [
     { name: 'LinkedIn', href: 'https://www.linkedin.com/in/hubert-idoko-47b817342', icon: Linkedin },
     { name: 'GitHub', href: 'https://github.com/Hubert24hrs', icon: Github },
-    { name: 'Hugging Face', href: 'https://huggingface.co/', icon: HuggingFaceIcon },
-    { name: 'Twitter/X', href: 'https://twitter.com/', icon: Twitter },
-    { name: 'Reddit', href: 'https://reddit.com/user/', icon: RedditIcon },
-    { name: 'Medium', href: 'https://medium.com/@', icon: BookOpen },
-    { name: 'Kaggle', href: 'https://kaggle.com/', icon: BarChart2 },
-    { name: 'TikTok', href: 'https://tiktok.com/@', icon: TikTokIcon },
-    { name: 'Instagram', href: 'https://instagram.com/', icon: Instagram },
-    { name: 'Facebook', href: 'https://facebook.com/', icon: Facebook },
-    { name: 'Email', href: 'mailto:iheanachohubert@gmail.com', icon: Mail },
-    { name: 'Phone', href: 'tel:+1234567890', icon: Phone },
+    { name: 'Email', href: 'mailto:hubert@idokohubert.com', icon: Mail },
+    { name: 'Phone', href: 'tel:+2348111605155', icon: Phone },
 ];
 
 export default function Contact() {

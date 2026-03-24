@@ -342,37 +342,85 @@ export async function getTestimonials(publishedOnly = true): Promise<Testimonial
     if (!prisma) {
         return getJsonTestimonials().filter((t: any) => !publishedOnly || t.published);
     }
-    return [];
+    const where = publishedOnly ? { published: true } : {};
+    return await prisma.testimonial.findMany({
+        where,
+        orderBy: { order: 'asc' }
+    });
 }
 
 export async function createTestimonial(item: Omit<Testimonial, 'id'>): Promise<Testimonial> {
-    throw new Error("Testimonials not yet implemented in DB");
+    return await prisma.testimonial.create({
+        data: item
+    });
 }
 
 export async function updateTestimonial(id: string, updates: Partial<Testimonial>): Promise<Testimonial | null> {
-    return null;
+    try {
+        return await prisma.testimonial.update({
+            where: { id },
+            data: updates,
+        });
+    } catch {
+        return null;
+    }
 }
 
 export async function deleteTestimonial(id: string): Promise<boolean> {
-    return false;
+    try {
+        await prisma.testimonial.delete({ where: { id } });
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 // ============== Messages ==============
 
 export async function getMessages(): Promise<Message[]> {
-    return [];
+    if (!prisma) return [];
+    return await prisma.message.findMany({
+        orderBy: { createdAt: 'desc' }
+    });
 }
 
 export async function createMessage(msg: Omit<Message, 'id' | 'date' | 'read'>): Promise<Message> {
-    throw new Error("Messages not yet implemented in DB");
+    const m = await prisma.message.create({
+        data: {
+            name: msg.name,
+            email: msg.email,
+            subject: msg.subject,
+            message: msg.message,
+        }
+    });
+    return {
+        ...m,
+        date: m.createdAt.toISOString(),
+    };
 }
 
 export async function markMessageRead(id: string): Promise<Message | null> {
-    return null;
+    try {
+        const m = await prisma.message.update({
+            where: { id },
+            data: { read: true },
+        });
+        return {
+            ...m,
+            date: m.createdAt.toISOString(),
+        };
+    } catch {
+        return null;
+    }
 }
 
 export async function deleteMessage(id: string): Promise<boolean> {
-    return false;
+    try {
+        await prisma.message.delete({ where: { id } });
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 // ============== Settings ==============

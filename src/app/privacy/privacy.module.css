@@ -1,0 +1,41 @@
+.container {
+    max-width: 800px;
+    margin: 120px auto 60px;
+    padding: 0 2rem;
+    line-height: 1.6;
+}
+
+.content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.content p, .content ul {
+    margin-bottom: 1rem;
+    color: var(--foreground-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.content ul {
+    padding-left: 1.5rem;
+}
+
+.content li {
+    margin-bottom: 0.5rem;
+}
+
+.content a {
+    color: var(--primary-color, #6366f1);
+    text-decoration: none;
+}
+
+.content a:hover {
+    text-decoration: underline;
+}
