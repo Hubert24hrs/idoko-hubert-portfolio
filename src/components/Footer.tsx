@@ -8,14 +8,12 @@ const navLinks = [
     { label: 'Projects', href: '#projects' },
     { label: 'Certifications', href: '#certifications' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Blog', href: '/blog' },
 ];
 
 const socialLinks = [
     { name: 'LinkedIn', href: 'https://www.linkedin.com/in/hubert-idoko-47b817342', icon: Linkedin },
     { name: 'GitHub', href: 'https://github.com/Hubert24hrs', icon: Github },
-    { name: 'Twitter', href: 'https://twitter.com/', icon: Twitter },
-    { name: 'Instagram', href: 'https://instagram.com/', icon: Instagram },
-    { name: 'Facebook', href: 'https://facebook.com/', icon: Facebook },
 ];
 
 export default function Footer() {
@@ -50,12 +48,6 @@ export default function Footer() {
                             <div className={styles.footerLinks}>
                                 <Link href="/resume.pdf" className={styles.footerLink} target="_blank">
                                     Resume
-                                </Link>
-                                <Link href="#" className={styles.footerLink}>
-                                    Blog
-                                </Link>
-                                <Link href="#" className={styles.footerLink}>
-                                    Case Studies
                                 </Link>
                             </div>
                         </div>
