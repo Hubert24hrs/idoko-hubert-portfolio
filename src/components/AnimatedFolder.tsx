@@ -138,18 +138,28 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
             if (e.key === 'ArrowRight') navigateNext();
             if (e.key === 'ArrowLeft') navigatePrev();
         };
-        // Close lightbox when user navigates via anchor/hash links in the header
-        const handleHashChange = () => {
-            if (isOpen) handleClose();
+
+        // Close lightbox when any navigation anchor is clicked.
+        // We use the capture phase so we intercept the click before
+        // Next.js's <Link> router processes it (hashchange/popstate are
+        // not reliable in Next.js App Router client-side navigation).
+        const handleNavClick = (e: MouseEvent) => {
+            if (!isOpen) return;
+            const anchor = (e.target as HTMLElement).closest('a');
+            if (!anchor) return;
+            const href = anchor.getAttribute('href') ?? '';
+            // Only close for in-page hash links and root navigation
+            if (href.startsWith('#') || href.startsWith('/#') || href === '/') {
+                handleClose();
+            }
         };
+
         window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('hashchange', handleHashChange);
-        window.addEventListener('popstate', handleHashChange);
+        document.addEventListener('click', handleNavClick, true); // capture phase
         if (isOpen) document.body.style.overflow = 'hidden';
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('hashchange', handleHashChange);
-            window.removeEventListener('popstate', handleHashChange);
+            document.removeEventListener('click', handleNavClick, true);
             document.body.style.overflow = '';
         };
     }, [isOpen, handleClose, navigateNext, navigatePrev]);
