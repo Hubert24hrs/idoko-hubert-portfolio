@@ -1,6 +1,28 @@
 {
   "projects": [
     {
+      "id": "proj-ags-events",
+      "title": "AG'S Event Services",
+      "slug": "ags-events-services",
+      "description": "A comprehensive web platform for a premium event management company, featuring an interactive booking system, responsive galleries, and a secure admin dashboard.",
+      "longDescription": "The AG'S Event Services project is a modern, responsive website tailored for high-end event planning and management.\n\nKey features include:\n* **Interactive UI/UX:** Stunning aesthetics with smooth micro-animations and responsive layouts across all viewports.\n* **Admin Dashboard:** A secure Firebase-backed backend allowing the business owner to manage testimonials, event news, and booking requests.\n* **Dynamic Gallery:** A lightweight image and video gallery showcasing past events.\n* **Performance First:** Built with Vanilla JavaScript, HTML, and CSS to guarantee optimal loading times while maintaining premium visual excellence.",
+      "category": "fullstack",
+      "categoryLabel": "Event Management & Booking",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Firebase"
+      ],
+      "imageUrl": "/images/projects/ags-events.png",
+      "liveUrl": "https://agseventservices.com",
+      "githubUrl": "https://github.com/Hubert24hrs/AG-S_Events_Services",
+      "metrics": {},
+      "featured": true,
+      "published": true,
+      "order": 1
+    },
+    {
       "id": "proj-apc-2027",
       "title": "APC Enugu 2027 Election Platform",
       "slug": "apc-enugu-2027-platform",
@@ -22,7 +44,7 @@
       "metrics": {},
       "featured": true,
       "published": true,
-      "order": 1
+      "order": 2
     }
   ],
   "certifications": [],
