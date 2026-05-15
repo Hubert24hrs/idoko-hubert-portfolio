@@ -1,6 +1,34 @@
 {
   "projects": [
     {
+      "id": "proj-portfolio-website",
+      "title": "Personal Portfolio Website",
+      "slug": "idoko-hubert-portfolio",
+      "description": "A premium, full-stack personal portfolio website built with Next.js 16, featuring an animated project showcase, admin CMS, blog, testimonials, and Prisma-powered PostgreSQL backend — deployed on Vercel.",
+      "longDescription": "This portfolio is a production-ready full-stack web application showcasing my skills, projects, and professional background.\n\nKey features include:\n* **Full-Stack Architecture:** Built with Next.js 16 (App Router), React 19, TypeScript, and a Prisma + PostgreSQL backend.\n* **Admin CMS:** A secure, role-based admin dashboard (NextAuth v5) for managing projects, certifications, testimonials, blog posts, and site settings — all without touching code.\n* **3D Animated Project Folders:** Custom-built interactive folder UI with animated project card previews and a full-screen image lightbox.\n* **Cloudinary Media Management:** Seamless image upload and optimization via Cloudinary integration.\n* **Blog System:** A full markdown-powered blog with categories, tags, reading time estimates, and featured posts.\n* **SEO Optimized:** Proper meta tags, semantic HTML, Open Graph, and structured data throughout.\n* **Vercel Deployment:** Continuous deployment from GitHub with automatic preview builds on every push.",
+      "category": "fullstack",
+      "categoryLabel": "Personal Branding & Portfolio",
+      "technologies": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "NextAuth",
+        "TailwindCSS",
+        "Cloudinary",
+        "Framer Motion",
+        "Vercel"
+      ],
+      "imageUrl": "/images/projects/portfolio-website.png",
+      "liveUrl": "https://www.idokohubert.com",
+      "githubUrl": "https://github.com/Hubert24hrs/idoko-hubert-portfolio",
+      "metrics": {},
+      "featured": true,
+      "published": true,
+      "order": 1
+    },
+    {
       "id": "proj-ags-events",
       "title": "AG'S Event Services",
       "slug": "ags-events-services",
@@ -20,7 +48,7 @@
       "metrics": {},
       "featured": true,
       "published": true,
-      "order": 1
+      "order": 2
     },
     {
       "id": "proj-apc-2027",
