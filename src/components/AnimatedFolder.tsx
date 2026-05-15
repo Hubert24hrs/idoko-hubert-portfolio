@@ -138,10 +138,18 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
             if (e.key === 'ArrowRight') navigateNext();
             if (e.key === 'ArrowLeft') navigatePrev();
         };
+        // Close lightbox when user navigates via anchor/hash links in the header
+        const handleHashChange = () => {
+            if (isOpen) handleClose();
+        };
         window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('popstate', handleHashChange);
         if (isOpen) document.body.style.overflow = 'hidden';
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('hashchange', handleHashChange);
+            window.removeEventListener('popstate', handleHashChange);
             document.body.style.overflow = '';
         };
     }, [isOpen, handleClose, navigateNext, navigatePrev]);
