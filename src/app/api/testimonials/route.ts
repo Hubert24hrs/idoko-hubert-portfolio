@@ -1,15 +1,29 @@
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getTestimonials, createTestimonial, updateTestimonial, deleteTestimonial } from '@/lib/data-service';
+
+async function isAdmin(): Promise<boolean> {
+    const session = await auth();
+    return session?.user?.role === 'admin';
+}
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
-    const publishedOnly = searchParams.get('published') === 'true';
-    const testimonials = await getTestimonials(publishedOnly);
-    return NextResponse.json({ testimonials });
+    // Unpublished testimonials and the authors' contact details are only visible to the admin
+    const admin = searchParams.get('published') !== 'true' && await isAdmin();
+    const testimonials = await getTestimonials(!admin);
+
+    return NextResponse.json({
+        testimonials: admin ? testimonials : testimonials.map((t) => ({ ...t, contact: undefined })),
+    });
 }
 
 export async function POST(request: NextRequest) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const data = await request.json();
 
@@ -43,6 +57,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const data = await request.json();
 
@@ -72,6 +90,10 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

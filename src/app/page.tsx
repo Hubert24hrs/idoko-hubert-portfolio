@@ -24,7 +24,8 @@ export default async function Home() {
         <Skills />
         <Projects data={projects} />
         <Certifications data={certifications} />
-        <Testimonials data={testimonials} />
+        {/* Contact details are private, so keep them out of the page payload */}
+        <Testimonials data={testimonials.map((t) => ({ ...t, contact: undefined }))} />
         <Contact />
       </main>
       <Footer />
