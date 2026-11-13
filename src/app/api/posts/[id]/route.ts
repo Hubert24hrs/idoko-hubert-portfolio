@@ -15,7 +15,8 @@ export async function GET(
             where: { id },
         });
 
-        if (!post) {
+        // Drafts are only visible to the admin
+        if (!post || (!post.published && (await auth())?.user?.role !== 'admin')) {
             return NextResponse.json(
                 { error: "Post not found" },
                 { status: 404 }
