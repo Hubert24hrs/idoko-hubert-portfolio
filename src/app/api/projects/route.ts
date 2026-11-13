@@ -6,7 +6,9 @@ import { getProjects, createProject, updateProject, deleteProject } from '@/lib/
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
-        const publishedOnly = searchParams.get('published') !== 'false';
+        // Unpublished projects are only visible to the admin
+        const publishedOnly = searchParams.get('published') !== 'false'
+            || (await auth())?.user?.role !== 'admin';
 
         const projects = await getProjects(publishedOnly);
         return NextResponse.json({ success: true, data: projects });

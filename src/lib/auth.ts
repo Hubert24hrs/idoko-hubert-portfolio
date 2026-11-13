@@ -1,10 +1,11 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { compare, hash } from "bcryptjs"
+import { compare } from "bcryptjs"
 
-// Admin credentials - set to user requested values
-const ADMIN_EMAIL = "iheanachohubert@gmail.com"
-const ADMIN_PASSWORD_HASH = "$2b$10$wCHg2f6honVD.J39HLXTyaxGy/gC18m5fBGPFSCH" // "Iheanacho25" hashed
+// Admin credentials come from the environment, never from source control.
+// ADMIN_PASSWORD_HASH is a bcrypt hash: generate one with `npm run hash-password`.
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL?.trim().toLowerCase()
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -15,38 +16,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                if (!credentials?.email || !credentials?.password) {
+                if (!ADMIN_EMAIL || !ADMIN_PASSWORD_HASH) {
+                    console.error("Admin login is disabled: set ADMIN_EMAIL and ADMIN_PASSWORD_HASH.")
                     return null
                 }
 
-                const email = credentials.email as string
-                const password = credentials.password as string
+                const email = typeof credentials?.email === "string" ? credentials.email.trim().toLowerCase() : ""
+                const password = typeof credentials?.password === "string" ? credentials.password : ""
 
-                // Check if email matches admin
-                if (email !== ADMIN_EMAIL) {
+                if (!email || !password) {
                     return null
                 }
 
-                // For first-time setup, allow password without hash verification
-                const isDefaultPassword = password === "Iheanacho25"
+                // Compare the password even when the email is wrong, so both failures take the same time
+                const isValidPassword = await compare(password, ADMIN_PASSWORD_HASH).catch(() => false)
 
-                // In production, compare with stored hash
-                let isValidPassword = isDefaultPassword
-                if (!isDefaultPassword && ADMIN_PASSWORD_HASH) {
-                    try {
-                        isValidPassword = await compare(password, ADMIN_PASSWORD_HASH)
-                    } catch {
-                        isValidPassword = false
-                    }
-                }
-
-                if (!isValidPassword) {
+                if (email !== ADMIN_EMAIL || !isValidPassword) {
                     return null
                 }
 
                 return {
                     id: "admin",
-                    email: email,
+                    email: ADMIN_EMAIL,
                     name: "Idoko Hubert",
                     role: "admin"
                 }
@@ -86,10 +77,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         strategy: "jwt",
         maxAge: 24 * 60 * 60, // 24 hours
     },
-    secret: process.env.NEXTAUTH_SECRET || "your-development-secret-change-in-production",
+    // No fallback value: a known secret would let anyone forge an admin session
+    secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
 })
-
-// Helper to generate password hash (run once to generate hash for .env)
-export async function generatePasswordHash(password: string): Promise<string> {
-    return await hash(password, 10)
-}

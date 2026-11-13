@@ -1,12 +1,19 @@
 
 import { NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getCertifications, createCertification, updateCertification, deleteCertification } from '@/lib/data-service';
+
+async function isAdmin(): Promise<boolean> {
+    const session = await auth();
+    return session?.user?.role === 'admin';
+}
 
 // GET /api/certifications - List all certifications
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
-        const publishedOnly = searchParams.get('published') !== 'false';
+        // Unpublished certifications are only visible to the admin
+        const publishedOnly = searchParams.get('published') !== 'false' || !(await isAdmin());
 
         const certifications = await getCertifications(publishedOnly);
         return NextResponse.json({ certifications });
@@ -18,6 +25,10 @@ export async function GET(request: Request) {
 
 // POST /api/certifications - Create new certification
 export async function POST(request: Request) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
 
@@ -50,6 +61,10 @@ export async function POST(request: Request) {
 
 // PUT /api/certifications - Update certification
 export async function PUT(request: Request) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
 
@@ -72,6 +87,10 @@ export async function PUT(request: Request) {
 
 // DELETE /api/certifications - Delete certification
 export async function DELETE(request: Request) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');

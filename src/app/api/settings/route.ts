@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getSettings, updateSettings } from '@/lib/data-service';
 
 // GET /api/settings - Get site settings
@@ -14,6 +15,11 @@ export async function GET() {
 
 // PUT /api/settings - Update site settings
 export async function PUT(request: Request) {
+    const session = await auth();
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
         const settings = await updateSettings(body);
